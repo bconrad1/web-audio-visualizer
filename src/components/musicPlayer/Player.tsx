@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Visualizer from "../waveform/Visualizer";
-import WaveForm from "../waveform/Waveform";
+import "../../styles/Player.css";
 
 export interface Analazyer {
   analyzer: AnalyserNode;
@@ -38,26 +38,31 @@ const Player = () => {
     setAudioSrc(URL.createObjectURL(file));
     audioAnalyzer();
   };
+
   return (
     <div>
       {analyzerData && <Visualizer analyzerData={analyzerData} />}
-      <div id="audio-controls" style={{ position: "absolute", top: "12px" }}>
-        <input
-          type="file"
-          name="audio"
-          ref={fileInputRef}
-          onChange={onFileChange}
-          style={{ display: "none" }}
-        />
-        <button
-          className="upload-btn"
-          onClick={() => {
-            if (fileInputRef) fileInputRef.current.click();
-          }}
-        >
-          Choose File
-        </button>
-        <audio src={audioSrc} controls ref={audioElmRef} />
+      <div id="player-ctn">
+        <div id="player-controls-ctn">
+          <input
+            type="file"
+            name="audio"
+            accept=".mp3,audio/*"
+            ref={fileInputRef}
+            onChange={onFileChange}
+            style={{ display: "none" }}
+          />
+          <button
+            className="upload-btn"
+            onClick={() => {
+              if (fileInputRef) fileInputRef.current.click();
+            }}
+            id={"file-upload-btn"}
+          >
+            Choose File
+          </button>
+          <audio src={audioSrc} controls ref={audioElmRef} />
+        </div>
       </div>
     </div>
   );
