@@ -1,7 +1,7 @@
 #AudioVisualizerWrapper {
-  background: linear-gradient(-45deg, #eeaa52, #b93668, #23a6d5, #23d5d5);
+  background: linear-gradient(218deg, #010122, #15181f, #1d2f3b, #030f17);
   background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  animation: gradient 60s ease infinite;
   height: 100vh;
 }
 

@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import Visualizer from "../waveform/Visualizer";
 import "../../styles/Player.css";
-
+import { AudioControls } from "./AudioControls";
+import { FaFileUpload } from "react-icons/fa";
 export interface Analazyer {
   analyzer: AnalyserNode;
   bufferLength: number;
@@ -10,7 +11,7 @@ export interface Analazyer {
 
 const Player = () => {
   const [analyzerData, setAnalyzerData] = useState<Analazyer | null>(null);
-  const [audioSrc, setAudioSrc] = useState("");
+  const [audioSrc, setAudioSrc] = useState<string>("");
   const audioElmRef: any = useRef(null);
   const fileInputRef: any = useRef(null);
 
@@ -24,7 +25,6 @@ const Player = () => {
     const bufferLength = analyzer.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
     const source = audioCtx.createMediaElementSource(audioElmRef.current);
-    console.log("BUFFER", bufferLength);
     source.connect(analyzer);
     source.connect(audioCtx.destination);
 
@@ -38,12 +38,31 @@ const Player = () => {
     setAudioSrc(URL.createObjectURL(file));
     audioAnalyzer();
   };
-
   return (
-    <div>
+    <div id="player-ctn">
       {analyzerData && <Visualizer analyzerData={analyzerData} />}
-      <div id="player-ctn">
-        <div id="player-controls-ctn">
+
+      <div id="input-ctn">
+        {!audioSrc ? (
+          <button
+            onClick={() => {
+              if (fileInputRef) fileInputRef.current.click();
+            }}
+            id={"file-upload-btn"}
+          >
+            Choose File <FaFileUpload style={{ marginLeft: "4px" }} />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              if (fileInputRef) fileInputRef.current.click();
+            }}
+            id={"file-upload-btn-min"}
+          >
+            <FaFileUpload style={{ marginLeft: "4px" }} />
+          </button>
+        )}
+        <div>
           <input
             type="file"
             name="audio"
@@ -52,16 +71,10 @@ const Player = () => {
             onChange={onFileChange}
             style={{ display: "none" }}
           />
-          <button
-            className="upload-btn"
-            onClick={() => {
-              if (fileInputRef) fileInputRef.current.click();
-            }}
-            id={"file-upload-btn"}
-          >
-            Choose File
-          </button>
-          <audio src={audioSrc} controls ref={audioElmRef} />
+          <audio src={audioSrc} ref={audioElmRef} />
+          {!!audioSrc && (
+            <AudioControls audioRef={audioElmRef} disable={!audioSrc} />
+          )}
         </div>
       </div>
     </div>

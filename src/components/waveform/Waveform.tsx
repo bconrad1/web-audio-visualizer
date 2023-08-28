@@ -8,7 +8,6 @@ function animateBars(
   bufferLength: any
 ) {
   // Analyze the audio data using the Web Audio API's `getByteFrequencyData` method.
-  analyser.getByteFrequencyData(dataArray);
 
   // Set the canvas fill style to black.
   canvasCtx.fillStyle = "#000";
@@ -60,7 +59,6 @@ const WaveForm = ({ analyzerData }: any) => {
 
     const animate = () => {
       requestAnimationFrame(animate);
-      canvas.width = canvas.width;
       animateBars(analyzer, canvas, canvasCtx, dataArray, bufferLength);
     };
 

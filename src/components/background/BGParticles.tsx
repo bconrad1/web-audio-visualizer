@@ -20,7 +20,7 @@ const BGParticles = () => {
         fpsLimit: 60,
         particles: {
           color: {
-            value: "#ffffff",
+            value: "#fcf1c2",
           },
           move: {
             direction: "none",
